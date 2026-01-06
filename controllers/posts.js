@@ -23,6 +23,15 @@ const createPost = async (req, res) => {
     const { content, groupId } = req.body;
     const author = req.user.userId;
 
+    if (content && content.toLowerCase().includes('<script')) {
+  const user = await User.findById(author);
+  if (user && !user.solvedChallenges.includes('web_xss_1')) {
+    user.solvedChallenges.push('web_xss_1');
+    await user.save();
+  }
+}
+
+
     if (groupId) {
       const group = await Group.findById(groupId);
       const isMember = group.members.some(m => m.userId.toString() === author.toString());
