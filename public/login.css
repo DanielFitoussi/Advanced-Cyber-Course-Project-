@@ -1,0 +1,89 @@
+/* בסיס עיצוב */
+body {
+  background: linear-gradient(135deg, #eaf6ff, #ffffff);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+.btn {
+  border-radius: 25px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #1da1f2;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0d8ddb;
+}
+
+.btn-outline-secondary {
+  border-color: #ccc;
+  color: #333;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f2f2f2;
+}
+
+.modal-content {
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+input.form-control,
+select.form-select {
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+}
+
+input:focus,
+select:focus {
+  border-color: #1da1f2;
+  box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+.text-muted a {
+  color: #1da1f2;
+  text-decoration: none;
+}
+
+.text-muted a:hover {
+  text-decoration: underline;
+}
+
+/* כפתורי הורדה */
+.btn-light {
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.btn-light:hover {
+  background-color: #f7f7f7;
+}
+
+/* אנימציה למעבר */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+.modal-body .btn {
+  font-size: 1rem;
+  padding: 10px;
+}
+
+/* מיקום */
+.container {
+  max-width: 450px;
+}

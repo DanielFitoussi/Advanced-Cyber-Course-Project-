@@ -1,0 +1,182 @@
+/* Reset בסיסי */
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+
+/* כרטיסי תוכן */
+.card {
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  background-color: white;
+  border: none;
+}
+
+/* כפתורי פעולה */
+.btn {
+  border-radius: 25px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #1da1f2;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0d8ddb;
+}
+
+.btn-outline-primary:hover {
+  background-color: #e6f4ff;
+  color: #007bff;
+}
+
+/* אינפוט */
+.form-control:focus {
+  border-color: #1da1f2;
+  box-shadow: 0 0 0 0.2rem rgba(29, 161, 242, 0.25);
+}
+
+/* כפתורי אייקון */
+.btn-icon {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: #555;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.btn-icon:hover {
+  transform: scale(1.2);
+  color: #1da1f2;
+}
+
+/* תגובות */
+.comment {
+  background-color: #f1f3f5;
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+
+/* מדיה בפוסטים */
+.post-media {
+  max-width: 100%;
+  max-height: 400px;
+  margin-top: 10px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* גרפים */
+.chart-wrapper, .chart-svg {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+}
+
+.chart-title {
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 0.5rem;
+}
+
+/* פילטרים */
+.dropdown .dropdown-menu {
+  min-width: 180px;
+}
+
+/* מצב לייק */
+.liked {
+  color: #dc3545;
+}
+
+/* תגיות */
+.pie-label {
+  font-size: 14px;
+  text-anchor: middle;
+}
+
+/* קישורים */
+a {
+  text-decoration: none;
+}
+
+/* קבוצות */
+#groupList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.5rem 1rem;
+}
+
+#groupList li span {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.charts-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.chart-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather-box {
+  background: #f0f8ff;
+  padding: 1em;
+  margin-top: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+.weather-box p {
+  margin: 5px 0;
+}
+
+.page-layout {
+  display: flex;
+  gap: 30px;
+}
+
+.main-content {
+  flex: 3;
+  min-width: 0;
+}
+
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .page-layout {
+    flex-direction: column;
+  }
+}
+
+

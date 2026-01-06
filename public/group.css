@@ -1,0 +1,157 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+header {
+  background-color: #1da1f2;
+  color: white;
+}
+
+#backToFeed {
+  background-color: white;
+  color: #1da1f2;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  padding: 5px 15px;
+  transition: background-color 0.3s ease;
+}
+
+#backToFeed:hover {
+  background-color: #f0f0f0;
+}
+
+#groupInfo {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+}
+
+#editGroupBtn, #leaveGroupBtn {
+  border-radius: 25px;
+  font-size: 0.85rem;
+}
+
+#postFormSection .card {
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#postContent {
+  resize: vertical;
+  min-height: 80px;
+}
+
+#searchInput {
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+#postsContainer .post-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+  padding: 1rem;
+}
+
+.post-card h4 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1c1e21;
+}
+
+.post-card p {
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.post-media {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+.hidden { display: none; }
+.admin-only { display: inline-block; }
+.member-only { display: block; }
+
+
+/* כפתורי אייקון בסיסיים */
+.btn-icon {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-icon:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+.btn-icon i.liked {
+  color: red;
+}
+
+/* קונטיינר של כפתורים */
+.post-card .d-flex.gap-3 {
+  gap: 12px;
+}
+
+/* תגובות */
+.comment-section {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.comment {
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+#membersListSection {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+#membersList {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+#membersList li {
+  background-color: white;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+  font-weight: 500;
+  direction: rtl;
+}
+
+#membersList .badge {
+  font-size: 12px;
+  padding: 5px 10px;
+}
+
