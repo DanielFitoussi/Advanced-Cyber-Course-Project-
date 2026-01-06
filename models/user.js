@@ -34,7 +34,11 @@ username: {
 friendRequests: [{
   type: mongoose.Schema.Types.ObjectId,
   ref: 'User'
-}]
+}],
+solvedChallenges: {
+  type: [String],
+  default: []
+}
 
 
 
