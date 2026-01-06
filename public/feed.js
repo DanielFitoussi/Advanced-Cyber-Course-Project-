@@ -227,7 +227,7 @@ function renderPost(post) {
 
   const textElement = document.createElement('p');
   textElement.classList.add('card-text');
-  textElement.textContent = post.content;
+  textElement.innerHTML = post.content;
   cardBody.appendChild(textElement);
 
   if (post.mediaUrl && post.mediaType !== 'text') {
