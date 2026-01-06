@@ -26,6 +26,9 @@ app.use('/api/users', userRoutes)
 app.use('/api/posts', postsRoutes)
 app.use('/uploads', express.static('uploads'));
 
+app.use('/api/challenges', require('./routes/challenges'))
+
+
 
 
 
