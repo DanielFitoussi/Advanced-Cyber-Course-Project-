@@ -5,6 +5,8 @@ const authenticateToken = require('../middleware/auth');
 const { getFriends } = require('../controllers/user');
 
 
+
+
 // נתיב רישום משתמש חדש
 router.post('/register', userController.registerUser);
 
@@ -22,6 +24,11 @@ router.post('/:id/accept-friend-request', authenticateToken, userController.acce
 
 // שליפת חברים
 router.get('/friends', authenticateToken, userController.getFriends);
+
+
+
+
+
 
 
 
