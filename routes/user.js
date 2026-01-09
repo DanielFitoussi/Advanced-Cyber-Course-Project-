@@ -3,6 +3,8 @@ const router = express.Router()
 const userController = require('../controllers/user');
 const authenticateToken = require('../middleware/auth');
 const { getFriends } = require('../controllers/user');
+const User = require('../models/user');
+
 
 
 
@@ -26,6 +28,19 @@ router.post('/:id/accept-friend-request', authenticateToken, userController.acce
 router.get('/friends', authenticateToken, userController.getFriends);
 
 
+// החזרת האתגרים שנפתרו עבור המשתמש המחובר
+router.get('/me/solved-challenges', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId)
+      .select('solvedChallenges');
+
+    res.json({
+      solvedChallenges: user?.solvedChallenges || []
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch solved challenges' });
+  }
+});
 
 
 

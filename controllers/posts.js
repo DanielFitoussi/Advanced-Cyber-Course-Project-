@@ -25,7 +25,15 @@ const createPost = async (req, res) => {
 
 let challengeSolved = null;
 
-if (content && content.toLowerCase().includes('<script')) {
+if (
+  content &&
+  (
+    content.toLowerCase().includes('<script') ||
+    content.toLowerCase().includes('onerror=') ||
+    content.toLowerCase().includes('onload=')
+  )
+) {
+
   const user = await User.findById(author);
   if (user && !user.solvedChallenges.includes('web_xss_1')) {
     user.solvedChallenges.push('web_xss_1');
@@ -87,14 +95,22 @@ const deletePost = async (req, res) => {
   try {
     const post = await Post.findById(postId);
     if (!post) return res.status(404).json({ error: 'Post not found' });
-   if (post.author.toString() !== req.user.userId) {
+if (post.author.toString() !== req.user.userId) {
   const user = await User.findById(req.user.userId);
+  let challengeSolved = null;
+
   if (user && !user.solvedChallenges.includes('web_idor_1')) {
     user.solvedChallenges.push('web_idor_1');
     await user.save();
+    challengeSolved = 'web_idor_1';
   }
-  return res.status(403).json({ error: 'You are not authorized to delete this post' });
+
+  return res.status(403).json({
+    error: 'You are not authorized to delete this post',
+    challengeSolved
+  });
 }
+
 
     await Post.findByIdAndDelete(postId);
     res.status(200).json({ message: 'Post deleted successfully' });

@@ -1,5 +1,30 @@
 let token = null;
 
+async function checkSolvedChallengesOnLoad() {
+  try {
+    const response = await fetch('http://localhost:3005/api/users/me/solved-challenges', {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    });
+
+    const data = await response.json();
+
+   if (
+  Array.isArray(data.solvedChallenges) &&
+  data.solvedChallenges.includes('web_idor_1') &&
+  !sessionStorage.getItem('web_idor_1_shown')
+) {
+  showChallengeSuccess('🎉 פתרת את אתגר WEB 2 (IDOR)');
+  sessionStorage.setItem('web_idor_1_shown', 'true');
+}
+
+  } catch (err) {
+    console.error('Failed to check solved challenges:', err);
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
   token = localStorage.getItem('token')
   if (!token) {
@@ -7,6 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'login.html';
     return;
   }
+
+  checkSolvedChallengesOnLoad();
+
+  
 
  // ✅ הסתרת לשונית החברים כברירת מחדל
   document.getElementById('friendsPanel').style.display = 'none';
