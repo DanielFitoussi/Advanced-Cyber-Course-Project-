@@ -112,9 +112,22 @@ document.addEventListener('DOMContentLoaded', () => {
         body: formData
       });
 
-      const savedPost = await response.json();
-      renderPost(savedPost);
-      postForm.reset();
+     const data = await response.json();
+
+// הצגת הפוסט
+renderPost(data.post);
+postForm.reset();
+
+// אם נפתר אתגר WEB 1
+if (data.challengeSolved === 'web_xss_1') {
+  showChallengeSuccess('🎉 פתרת את אתגר WEB 1 (Stored XSS)');
+}
+
+// אם בעתיד WEB 2
+if (data.challengeSolved === 'web_2') {
+  showChallengeSuccess('🎉 פתרת את אתגר WEB 2');
+}
+
     } catch (err) {
       console.error('Failed to create post:', err);
     }
@@ -228,6 +241,7 @@ function renderPost(post) {
   const textElement = document.createElement('p');
   textElement.classList.add('card-text');
   textElement.innerHTML = post.content;
+  
   cardBody.appendChild(textElement);
 
   if (post.mediaUrl && post.mediaType !== 'text') {
@@ -486,6 +500,11 @@ async function renderPostsPerGroupChart(token) {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const data = await response.json();
+    console.log('challengeSolved from server:', data.challengeSolved);
+  
+    
+
+
 
     const svg = d3.select("#postsPerGroupChart");
     svg.selectAll("*").remove(); // ניקוי קודם
@@ -547,6 +566,7 @@ async function renderPostsPerGroupChart(token) {
     console.error("❌ Failed to load posts per group chart:", err);
   }
 }
+
 
 
 
@@ -635,6 +655,19 @@ async function searchPosts(query) {
   }
 
 
+}
+
+  function showChallengeSuccess(message) {
+  const toast = document.getElementById('challenge-toast');
+
+  if (!toast) return;
+
+  toast.innerText = message;
+  toast.classList.remove('hidden');
+
+  setTimeout(() => {
+    toast.classList.add('hidden');
+  }, 5000);
 }
 
 

@@ -1,0 +1,29 @@
+.challenge-toast {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 50px;
+
+  background-color: #28a745; /* ירוק הצלחה */
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  z-index: 9999;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.challenge-toast.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}

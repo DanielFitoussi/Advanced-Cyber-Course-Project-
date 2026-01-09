@@ -23,14 +23,17 @@ const createPost = async (req, res) => {
     const { content, groupId } = req.body;
     const author = req.user.userId;
 
-    if (content && content.toLowerCase().includes('<script')) {
+let challengeSolved = null;
+
+if (content && content.toLowerCase().includes('<script')) {
   const user = await User.findById(author);
   if (user && !user.solvedChallenges.includes('web_xss_1')) {
     user.solvedChallenges.push('web_xss_1');
     await user.save();
+    challengeSolved = 'web_xss_1';
+
   }
 }
-
 
     if (groupId) {
       const group = await Group.findById(groupId);
@@ -58,7 +61,11 @@ const createPost = async (req, res) => {
     const populatedPost = await Post.findById(newPost._id)
       .populate('author', 'username firstName lastName')
       .populate('comments.author', 'username');
-    res.status(201).json(populatedPost);
+  res.status(201).json({
+  post: populatedPost,
+  challengeSolved
+});
+
   } catch (err) {
     console.error('Error while creating post:', err);
     res.status(500).json({ error: 'Server error' });
@@ -80,8 +87,15 @@ const deletePost = async (req, res) => {
   try {
     const post = await Post.findById(postId);
     if (!post) return res.status(404).json({ error: 'Post not found' });
-    if (post.author.toString() !== req.user.userId)
-      return res.status(403).json({ error: 'You are not authorized to delete this post' });
+   if (post.author.toString() !== req.user.userId) {
+  const user = await User.findById(req.user.userId);
+  if (user && !user.solvedChallenges.includes('web_idor_1')) {
+    user.solvedChallenges.push('web_idor_1');
+    await user.save();
+  }
+  return res.status(403).json({ error: 'You are not authorized to delete this post' });
+}
+
     await Post.findByIdAndDelete(postId);
     res.status(200).json({ message: 'Post deleted successfully' });
   } catch (err) {
