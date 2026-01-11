@@ -20,7 +20,20 @@ module.exports = [
       "Check whether the server verifies ownership before performing actions.",
       "Try changing the post ID in a request and observe the response."
     ]
-  }
+  },
+
+  {
+  id: "api_auth_1",
+  name: "Broken Authentication in API",
+  category: "api",
+  description: "An API endpoint returns sensitive data without checking if the user is authenticated.",
+  hints: [
+    "Look for API endpoints that return data.",
+    "Try calling an endpoint without logging in.",
+    "Check if the server verifies authentication before responding."
+  ]
+}
+
 
 
 ];
