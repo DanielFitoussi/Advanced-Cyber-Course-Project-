@@ -19,6 +19,17 @@ async function checkSolvedChallengesOnLoad() {
   sessionStorage.setItem('web_idor_1_shown', 'true');
 }
 
+if (
+  Array.isArray(data.solvedChallenges) &&
+  data.solvedChallenges.includes('api_auth_1') &&
+  !sessionStorage.getItem('api_auth_1_shown')
+) {
+  showChallengeSuccess('🎉 פתרת את אתגר API (Broken Authentication)');
+  sessionStorage.setItem('api_auth_1_shown', 'true');
+}
+
+
+
   } catch (err) {
     console.error('Failed to check solved challenges:', err);
   }
@@ -36,13 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   checkSolvedChallengesOnLoad();
 
- if (
-  document.cookie.includes('api_visited=true') &&
-  !sessionStorage.getItem('api_auth_1_shown')
-) {
-  showChallengeSuccess('🎉 פתרת אתגר API (Broken Authentication)');
-  sessionStorage.setItem('api_auth_1_shown', 'true');
-}
+
+
+
+
+
 
 
   
