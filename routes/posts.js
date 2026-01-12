@@ -8,7 +8,7 @@ const upload = require('../middleware/upload');
 
 
 router.patch('/:id/like', authenticateToken, likePost);
-router.get('/', postsController.getPosts);
+router.get('/', authenticateToken, postsController.getPosts);
 router.post('/', authenticateToken, upload.single('media'), postsController.createPost);
 router.delete('/clear', authenticateToken, postsController.clearPosts);
 router.delete('/:id', authenticateToken, postsController.deletePost);

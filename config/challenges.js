@@ -32,6 +32,18 @@ module.exports = [
     "Try calling an endpoint without logging in.",
     "Check if the server verifies authentication before responding."
   ]
+},
+
+{
+  id: "api_bola_1",
+  name: "Broken Object Level Authorization (BOLA)",
+  category: "api",
+  description: "An authenticated user can access objects they are not authorized to see by calling a generic API endpoint.",
+  hints: [
+    "Observe API requests in the Network tab.",
+    "Compare endpoints used by the UI with other available API routes.",
+    "Try accessing a broader endpoint and inspect the returned data."
+  ]
 }
 
 

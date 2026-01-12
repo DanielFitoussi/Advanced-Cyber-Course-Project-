@@ -8,14 +8,36 @@ const getPosts = async (req, res) => {
   try {
     const posts = await Post.find()
       .sort({ createdAt: -1 })
-      .populate('author', 'username firstName lastName')
+      .populate('author', '_id username firstName lastName')
       .populate('comments.author', 'username');
-    res.json(posts);
+
+    const user = await User.findById(req.user.userId).populate('friends');
+
+    const allowedIds = user.friends.map(f => f._id.toString());
+    allowedIds.push(req.user.userId);
+
+    const hasForeignPosts = posts.some(
+      p => !allowedIds.includes(p.author._id.toString())
+    );
+
+    let challengeSolved = null;
+
+    if (hasForeignPosts && !user.solvedChallenges.includes('api_bola_1')) {
+      user.solvedChallenges.push('api_bola_1');
+      await user.save();
+      challengeSolved = 'api_bola_1';
+    }
+
+    res.json({
+      posts,
+      challengeSolved
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
   }
 };
+
 
 // יצירת פוסט חדש עם populate
 const createPost = async (req, res) => {

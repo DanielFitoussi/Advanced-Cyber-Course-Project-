@@ -28,6 +28,16 @@ if (
   sessionStorage.setItem('api_auth_1_shown', 'true');
 }
 
+if (
+  Array.isArray(data.solvedChallenges) &&
+  data.solvedChallenges.includes('api_bola_1') &&
+  !sessionStorage.getItem('api_bola_1_shown')
+) {
+  showChallengeSuccess('🎉 פתרת את אתגר API BOLA (Broken Object Level Authorization)');
+  sessionStorage.setItem('api_bola_1_shown', 'true');
+}
+
+
 
 
   } catch (err) {
