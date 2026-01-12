@@ -178,5 +178,36 @@ a {
     flex-direction: column;
   }
 }
+#challenge-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+#challenge-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+
+.challenge-unsolved {
+  background-color: #fdecea;
+  color: #a12622;
+  border: 1px solid #f5c6cb;
+}
+
+
+.challenge-solved {
+  background-color: #e6f4ea;
+  color: #1e7e34;
+  border: 1px solid #b7e1c1;
+}
+
+
 
 

@@ -1,3 +1,13 @@
+
+const ALL_CHALLENGES = [
+  { id: 'web_xss_1', name: 'Web XSS' },
+  { id: 'web_idor_1', name: 'Web IDOR' },
+  { id: 'api_bola_1', name: 'API BOLA' },
+  { id: 'api_auth_1', name: 'API Broken Auth' },
+  { id: 'llm_prompt_injection_1', name: 'LLM Prompt Injection' }
+]
+
+
 let token = null;
 
 async function checkSolvedChallengesOnLoad() {
@@ -9,6 +19,9 @@ async function checkSolvedChallengesOnLoad() {
     });
 
     const data = await response.json();
+   renderChecklist(data.solvedChallenges)
+
+
 
    if (
   Array.isArray(data.solvedChallenges) &&
@@ -66,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   checkSolvedChallengesOnLoad();
-
+  document.addEventListener
 
 
 
@@ -760,6 +773,26 @@ async function searchPosts(query) {
 
 
 }
+
+function renderChecklist(solvedChallenges) {
+  const list = document.getElementById('challenge-list')
+  if (!list) return
+
+  list.innerHTML = ''
+
+  ALL_CHALLENGES.forEach(challenge => {
+    const solved = solvedChallenges.includes(challenge.id)
+
+    const li = document.createElement('li')
+    li.classList.add(solved ? 'challenge-solved' : 'challenge-unsolved')
+
+    li.textContent = (solved ? '✔️ ' : '❌ ') + challenge.name
+
+    list.appendChild(li)
+  })
+}
+
+
 
   function showChallengeSuccess(message) {
   const toast = document.getElementById('challenge-toast');

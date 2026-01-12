@@ -27,3 +27,18 @@
   transform: translateY(-100%);
   pointer-events: none;
 }
+
+#challenge-list {
+  list-style: none;
+  padding: 0;
+}
+
+.challenge-solved {
+  color: #2ecc71; /* ירוק */
+  font-weight: bold;
+}
+
+.challenge-unsolved {
+  color: #e74c3c; /* אדום */
+  opacity: 0.8;
+}
