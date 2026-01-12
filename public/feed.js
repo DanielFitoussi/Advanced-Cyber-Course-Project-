@@ -26,6 +26,7 @@ async function checkSolvedChallengesOnLoad() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('feed loaded');
   token = localStorage.getItem('token')
   if (!token) {
     alert('You must be logged in to access the feed');
@@ -34,6 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   checkSolvedChallengesOnLoad();
+
+ if (
+  document.cookie.includes('api_visited=true') &&
+  !sessionStorage.getItem('api_auth_1_shown')
+) {
+  showChallengeSuccess('🎉 פתרת אתגר API (Broken Authentication)');
+  sessionStorage.setItem('api_auth_1_shown', 'true');
+}
+
 
   
 

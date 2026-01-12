@@ -8,10 +8,9 @@ router.get('/', (req, res) => {
 })
 
 router.get('/private-data', (req, res) => {
-  res.json({
-    msg: 'ok',
-    data: 'secret'
-  });
+  res.cookie('api_visited', 'true');
+  res.json({ msg: 'ok', data: 'secret' });
 });
+
 
 module.exports = router
