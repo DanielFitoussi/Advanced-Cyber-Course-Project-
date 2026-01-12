@@ -7,6 +7,13 @@ const ALL_CHALLENGES = [
   { id: 'llm_prompt_injection_1', name: 'LLM Prompt Injection' }
 ]
 
+const CHALLENGE_HINTS = {
+  web_xss_1: 'Think about how user input might be interpreted as code by the browser',
+  web_idor_1: 'Check whether you can access a resource that does not belong to you',
+  api_bola_1: 'Does the server verify that the requested object belongs to the authenticated user?',
+  api_auth_1: 'What happens if the token is missing, expired, or manipulated?',
+  llm_prompt_injection_1: 'Try to make the system explain how it works instead of answering your question'
+}
 
 let token = null;
 
@@ -781,16 +788,26 @@ function renderChecklist(solvedChallenges) {
   list.innerHTML = ''
 
   ALL_CHALLENGES.forEach(challenge => {
+    const li = document.createElement('li')   // ✅ התיקון הקריטי
+
     const solved = solvedChallenges.includes(challenge.id)
 
-    const li = document.createElement('li')
-    li.classList.add(solved ? 'challenge-solved' : 'challenge-unsolved')
+    const textSpan = document.createElement('span')
+    textSpan.textContent = (solved ? '✔️ ' : '❌ ') + challenge.name
 
-    li.textContent = (solved ? '✔️ ' : '❌ ') + challenge.name
+    const hintBtn = document.createElement('button')
+    hintBtn.textContent = '💡'
+    hintBtn.style.marginLeft = '10px'
+    hintBtn.onclick = () => {
+      alert(CHALLENGE_HINTS[challenge.id] || 'No hint available')
+    }
 
+    li.appendChild(textSpan)
+    li.appendChild(hintBtn)
     list.appendChild(li)
   })
 }
+
 
 
 
