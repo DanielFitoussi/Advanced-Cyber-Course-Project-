@@ -224,6 +224,42 @@ if (data.challengeSolved === 'web_2') {
 
   loadPosts();
 
+const llmSendBtn = document.getElementById('llm-send')
+const llmInput = document.getElementById('llm-input')
+const llmMessages = document.getElementById('llm-messages')
+
+if (llmSendBtn) {
+  llmSendBtn.addEventListener('click', async () => {
+    const text = llmInput.value.trim()
+    if (!text) return
+
+    const userMsg = document.createElement('div')
+    userMsg.textContent = '🧑‍💻 ' + text
+    llmMessages.appendChild(userMsg)
+
+    llmInput.value = ''
+
+    const res = await fetch('/api/llm/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify({ prompt: text })
+    })
+
+    const data = await res.json()
+
+
+    const botMsg = document.createElement('div')
+    botMsg.textContent = '🤖 ' + data.reply
+    llmMessages.appendChild(botMsg)
+
+    
+
+    llmMessages.scrollTop = llmMessages.scrollHeight
+  })
+}
 
 
   const showFriendsBtn = document.getElementById('showFriendsBtn');

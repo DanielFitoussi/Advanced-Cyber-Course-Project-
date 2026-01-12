@@ -98,6 +98,23 @@
         <h3>מזג האוויר בתל אביב</h3>
         <div id="weatherInfo">טוען...</div>
       </section>
+      <section class="card p-3 mt-3" id="llm-chat">
+  <h5 class="fw-bold mb-2 text-center">Assistant</h5>
+
+  <div id="llm-messages" class="mb-2" style="max-height: 200px; overflow-y: auto;"></div>
+
+  <input
+    type="text"
+    id="llm-input"
+    class="form-control mb-2"
+    placeholder="כתוב הודעה..."
+  />
+
+  <button id="llm-send" class="btn btn-outline-primary w-100">
+    שלח
+  </button>
+</section>
+
     </aside>
   </div>
 
