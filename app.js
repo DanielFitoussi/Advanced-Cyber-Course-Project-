@@ -9,6 +9,8 @@ const postsRoutes = require('./routes/posts')
 const { connect } = require('mongoose')
 
 const groupRoutes = require('./routes/groups');
+const llmRoutes = require('./routes/llm')
+
 
 
 
@@ -27,6 +29,8 @@ app.use('/api/posts', postsRoutes)
 app.use('/uploads', express.static('uploads'));
 
 app.use('/api/challenges', require('./routes/challenges'))
+app.use('/api/llm', llmRoutes)
+
 
 
 

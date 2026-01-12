@@ -37,6 +37,16 @@ if (
   sessionStorage.setItem('api_bola_1_shown', 'true');
 }
 
+if (
+  Array.isArray(data.solvedChallenges) &&
+  data.solvedChallenges.includes('llm_prompt_injection_1') &&
+  !sessionStorage.getItem('llm_prompt_injection_1_shown')
+) {
+  showChallengeSuccess('🎉 פתרת את אתגר LLM Prompt Injection');
+  sessionStorage.setItem('llm_prompt_injection_1_shown', 'true');
+}
+
+
 
 
 

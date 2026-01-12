@@ -44,7 +44,19 @@ module.exports = [
     "Compare endpoints used by the UI with other available API routes.",
     "Try accessing a broader endpoint and inspect the returned data."
   ]
+},
+{
+  id: "llm_prompt_injection_1",
+  name: "LLM Prompt Injection",
+  category: "llm",
+  description: "An attacker can manipulate the language model to ignore system instructions and reveal internal logic.",
+  hints: [
+    "Observe how the assistant behaves with different prompts.",
+    "Try changing the assistant role through natural language.",
+    "Think about how system instructions can be overridden."
+  ]
 }
+
 
 
 
