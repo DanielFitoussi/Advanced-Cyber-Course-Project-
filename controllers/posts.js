@@ -112,35 +112,70 @@ const clearPosts = async (req, res) => {
   }
 };
 
+// const deletePost = async (req, res) => {
+//   const postId = req.params.id;
+//   try {
+//     const post = await Post.findById(postId);
+//     if (!post) return res.status(404).json({ error: 'Post not found' });
+// if (post.author.toString() !== req.user.userId) {
+//   const user = await User.findById(req.user.userId);
+//   let challengeSolved = null;
+
+//   if (user && !user.solvedChallenges.includes('web_idor_1')) {
+//     user.solvedChallenges.push('web_idor_1');
+//     await user.save();
+//     challengeSolved = 'web_idor_1';
+//   }
+
+//   return res.status(403).json({
+//     error: 'You are not authorized to delete this post',
+//     challengeSolved
+//   });
+// }
+
+
+//     await Post.findByIdAndDelete(postId);
+//     res.status(200).json({ message: 'Post deleted successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: 'Server error' });
+//   }
+// };
 const deletePost = async (req, res) => {
   const postId = req.params.id;
+
   try {
     const post = await Post.findById(postId);
-    if (!post) return res.status(404).json({ error: 'Post not found' });
-if (post.author.toString() !== req.user.userId) {
-  const user = await User.findById(req.user.userId);
-  let challengeSolved = null;
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
 
-  if (user && !user.solvedChallenges.includes('web_idor_1')) {
-    user.solvedChallenges.push('web_idor_1');
-    await user.save();
-    challengeSolved = 'web_idor_1';
-  }
-
-  return res.status(403).json({
-    error: 'You are not authorized to delete this post',
-    challengeSolved
-  });
-}
-
+    const isForeignPost = post.author.toString() !== req.user.userId;
 
     await Post.findByIdAndDelete(postId);
-    res.status(200).json({ message: 'Post deleted successfully' });
+
+    let challengeSolved = null;
+
+    if (isForeignPost) {
+      const user = await User.findById(req.user.userId);
+      if (user && !user.solvedChallenges.includes('web_idor_1')) {
+        user.solvedChallenges.push('web_idor_1');
+        await user.save();
+        challengeSolved = 'web_idor_1';
+      }
+    }
+
+    return res.status(200).json({
+      message: 'Post deleted successfully',
+      challengeSolved
+    });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
+    console.error('deletePost error:', err);
+    return res.status(500).json({ error: 'Server error' });
   }
 };
+
 
 const updatePost = async (req, res) => {
   const postId = req.params.id;

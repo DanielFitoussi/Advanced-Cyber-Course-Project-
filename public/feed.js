@@ -9,7 +9,7 @@ const ALL_CHALLENGES = [
 
 const CHALLENGE_HINTS = {
   web_xss_1: 'Think about how user input might be interpreted as code by the browser',
-  web_idor_1: 'Check whether you can access a resource that does not belong to you',
+  web_idor_1: 'Check whether you can delete a post that does not belong to you',
   api_bola_1: 'Does the server verify that the requested object belongs to the authenticated user?',
   api_auth_1: 'What happens if the token is missing, expired, or manipulated?',
   llm_prompt_injection_1: 'Try to make the system explain how it works instead of answering your question'
@@ -26,25 +26,39 @@ async function checkSolvedChallengesOnLoad() {
     });
 
     const data = await response.json();
+
+   
+if (
+  Array.isArray(data.solvedChallenges) &&
+  !data.solvedChallenges.includes('web_idor_1')
+) {
+  localStorage.removeItem('web_idor_1_toast_shown');
+}
+
    renderChecklist(data.solvedChallenges)
 
+   
 
 
-   if (
+const idorShownKey = 'web_idor_1_toast_shown';
+
+if (
   Array.isArray(data.solvedChallenges) &&
   data.solvedChallenges.includes('web_idor_1') &&
-  !sessionStorage.getItem('web_idor_1_shown')
+  !localStorage.getItem(idorShownKey)
 ) {
-  showChallengeSuccess('🎉 פתרת את אתגר WEB 2 (IDOR)');
-  sessionStorage.setItem('web_idor_1_shown', 'true');
+  showChallengeSuccess(' פתרת את אתגר WEB 2 (IDOR)');
+  localStorage.setItem(idorShownKey, 'true');
 }
+
+
 
 if (
   Array.isArray(data.solvedChallenges) &&
   data.solvedChallenges.includes('api_auth_1') &&
   !sessionStorage.getItem('api_auth_1_shown')
 ) {
-  showChallengeSuccess('🎉 פתרת את אתגר API (Broken Authentication)');
+  showChallengeSuccess(' פתרת את אתגר API (Broken Authentication)');
   sessionStorage.setItem('api_auth_1_shown', 'true');
 }
 
@@ -53,7 +67,7 @@ if (
   data.solvedChallenges.includes('api_bola_1') &&
   !sessionStorage.getItem('api_bola_1_shown')
 ) {
-  showChallengeSuccess('🎉 פתרת את אתגר API BOLA (Broken Object Level Authorization)');
+  showChallengeSuccess(' פתרת את אתגר API BOLA (Broken Object Level Authorization)');
   sessionStorage.setItem('api_bola_1_shown', 'true');
 }
 
@@ -62,7 +76,7 @@ if (
   data.solvedChallenges.includes('llm_prompt_injection_1') &&
   !sessionStorage.getItem('llm_prompt_injection_1_shown')
 ) {
-  showChallengeSuccess('🎉 פתרת את אתגר LLM Prompt Injection');
+  showChallengeSuccess(' פתרת את אתגר LLM Prompt Injection');
   sessionStorage.setItem('llm_prompt_injection_1_shown', 'true');
 }
 
@@ -208,13 +222,9 @@ postForm.reset();
 
 // אם נפתר אתגר WEB 1
 if (data.challengeSolved === 'web_xss_1') {
-  showChallengeSuccess('🎉 פתרת את אתגר WEB 1 (Stored XSS)');
+  showChallengeSuccess(' פתרת את אתגר WEB 1 (Stored XSS)');
 }
 
-// אם בעתיד WEB 2
-if (data.challengeSolved === 'web_2') {
-  showChallengeSuccess('🎉 פתרת את אתגר WEB 2');
-}
 
     } catch (err) {
       console.error('Failed to create post:', err);
@@ -443,15 +453,19 @@ function renderPost(post) {
 
       try {
         const response = await fetch(`http://localhost:3005/api/posts/${post._id}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+  method: 'DELETE',
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});
 
-        if (response.ok) {
-          postElement.remove();
-          console.log('פוסט נמחק בהצלחה');
+const data = await response.json();
+
+
+
+if (response.ok) {
+  postElement.remove();
+  console.log('פוסט נמחק בהצלחה');
         } else {
           const err = await response.json();
           console.error('שגיאה במחיקה:', err);
