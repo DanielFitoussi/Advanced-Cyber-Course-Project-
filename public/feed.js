@@ -11,7 +11,7 @@ const CHALLENGE_HINTS = {
   web_xss_1: 'Think about how user input might be interpreted as code by the browser',
   web_idor_1: 'Check whether you can delete a post that does not belong to you',
   api_bola_1: 'Does the server verify that the requested object belongs to the authenticated user?',
-  api_auth_1: 'What happens if the token is missing, expired, or manipulated?',
+  api_auth_1: 'Try accessing internal challenge endpoints directly via the browser',
   llm_prompt_injection_1: 'Try to make the system explain how it works instead of answering your question'
 }
 
@@ -27,15 +27,31 @@ async function checkSolvedChallengesOnLoad() {
 
     const data = await response.json();
 
-   
-if (
-  Array.isArray(data.solvedChallenges) &&
-  !data.solvedChallenges.includes('web_idor_1')
-) {
-  localStorage.removeItem('web_idor_1_toast_shown');
-}
+    // 🔹 אתגרים גלובליים (ללא משתמש)
+const globalRes = await fetch('/api/challenges/global-status');
+const globalData = await globalRes.json();
 
-   renderChecklist(data.solvedChallenges)
+const globalSolved = globalData.solved || [];
+
+const solvedChallenges = [
+  ...new Set([
+    ...(data.solvedChallenges || []),
+    ...globalSolved
+  ])
+];
+
+
+   
+ALL_CHALLENGES.forEach(challenge => {
+  const toastKey = `${challenge.id}_toast_shown`;
+
+  if (!solvedChallenges.includes(challenge.id)) {
+    localStorage.removeItem(toastKey);
+  }
+});
+
+
+   renderChecklist(solvedChallenges)
 
    
 
@@ -43,39 +59,41 @@ if (
 const idorShownKey = 'web_idor_1_toast_shown';
 
 if (
-  Array.isArray(data.solvedChallenges) &&
-  data.solvedChallenges.includes('web_idor_1') &&
+  solvedChallenges.includes('web_idor_1') &&
   !localStorage.getItem(idorShownKey)
-) {
+)
+ {
   showChallengeSuccess(' פתרת את אתגר WEB 2 (IDOR)');
   localStorage.setItem(idorShownKey, 'true');
 }
 
-
-
+// 🔐 API Broken Authentication
 if (
-  Array.isArray(data.solvedChallenges) &&
-  data.solvedChallenges.includes('api_auth_1') &&
-  !sessionStorage.getItem('api_auth_1_shown')
-) {
-  showChallengeSuccess(' פתרת את אתגר API (Broken Authentication)');
-  sessionStorage.setItem('api_auth_1_shown', 'true');
+  solvedChallenges.includes('api_auth_1') &&
+  !localStorage.getItem('api_auth_1_toast_shown')
+)
+ {
+  showChallengeSuccess(' פתרת את אתגר API – Broken Authentication');
+  localStorage.setItem('api_auth_1_toast_shown', 'true');
 }
 
+
+
+
 if (
-  Array.isArray(data.solvedChallenges) &&
-  data.solvedChallenges.includes('api_bola_1') &&
+  solvedChallenges.includes('api_bola_1') &&
   !sessionStorage.getItem('api_bola_1_shown')
-) {
+)
+ {
   showChallengeSuccess(' פתרת את אתגר API BOLA (Broken Object Level Authorization)');
   sessionStorage.setItem('api_bola_1_shown', 'true');
 }
 
-if (
-  Array.isArray(data.solvedChallenges) &&
-  data.solvedChallenges.includes('llm_prompt_injection_1') &&
+iif (
+  solvedChallenges.includes('llm_prompt_injection_1') &&
   !sessionStorage.getItem('llm_prompt_injection_1_shown')
-) {
+)
+ {
   showChallengeSuccess(' פתרת את אתגר LLM Prompt Injection');
   sessionStorage.setItem('llm_prompt_injection_1_shown', 'true');
 }
@@ -101,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   checkSolvedChallengesOnLoad();
   document.addEventListener
+
 
 
 

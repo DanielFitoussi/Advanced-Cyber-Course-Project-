@@ -18,7 +18,7 @@ module.exports = [
   id: "api_auth_1",
   name: "Broken Authentication in API",
   category: "api",
-  description: "An API endpoint returns sensitive data without checking if the user is authenticated.",
+ description: "An internal API endpoint exposes sensitive data and can be accessed directly without authentication.",
 
 },
 
