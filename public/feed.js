@@ -89,7 +89,7 @@ if (
   sessionStorage.setItem('api_bola_1_shown', 'true');
 }
 
-iif (
+if (
   solvedChallenges.includes('llm_prompt_injection_1') &&
   !sessionStorage.getItem('llm_prompt_injection_1_shown')
 )
